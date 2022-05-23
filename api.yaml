@@ -1,0 +1,343 @@
+swagger: "2.0"
+info:
+  description: "This is a documentation for Routine Management System of Herald College Kathmandu"
+  version: "1.0.0"
+  title: "Herald Routine Management System"
+  contact:
+    email: "np03cs4s210069@heraldcollege.edu.np"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  server:
+    -url: "http://localhost:8000/"
+    description: "This is the local sever"
+
+schemes:
+- "http"
+- "https"
+
+paths:
+
+  # login routing
+  # /api/v4/student/Login:
+  #   post:
+  #     tags:
+  #     - "Student"
+  #     summary: "Student Login"
+  #     description: ""
+  #     consumes:
+  #     - "application/json"
+  #     produces:
+  #     - "application/json"
+  #     parameters:
+  #       - name: uid
+  #         in: path
+  #         required: true
+  #         schema:
+  #           type: object
+  #     responses:
+  #       "400":
+  #         description: "Unverified users"
+  #       "200":
+  #         description: "Login successful"
+  #       "500":
+  #         description: "500 Internal Server Error !"
+
+  # Logout
+  /api/v4/Logout:
+    post:
+      summary: "Logout"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+          "200":
+            description: "Logout successful"
+
+  # CRUD Routine Operation
+  # Post Routine
+  /api/v4/admin/postRoutineData:
+    post:
+      tags:
+        - "Admin"
+      summary: "Posts Routine Data"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: routine
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "200":
+          description: "Routine posted successfully!"
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                module_name:
+                  type: string
+                lecturer_name:
+                  type: string
+                group:
+                  type: string
+                room_name:
+                  type: string
+                block_name:
+                  type: string
+                timing:
+                  type: string
+                createdOn:
+                  type: string
+        "500":
+          description: "500 Internal Server Error !"
+
+  # get routine data
+  /api/v4/admin/getRoutineData:
+    get:
+      tags:
+      - "Admin"
+      summary: "Gets routine data"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: routine
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "200":
+          description: "Got Routine Data Successfully"
+          schema:
+            type: array
+            items:
+              type: object
+        "500":
+          description: "500 Internal Server Error !"
+  
+  # Update Routine
+  /api/v4/admin/updateRoutineData:
+    post:
+      tags:
+        - "Admin"
+      summary: "Updates Routine Data"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: routine
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "200":
+          description: "Routine updated successfully!"
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                module_name:
+                  type: string
+                lecturer_name:
+                  type: string
+                group:
+                  type: string
+                room_name:
+                  type: string
+                block_name:
+                  type: string
+                timing:
+                  type: string
+                createdOn:
+                  type: string
+        "500":
+          description: "500 Internal Server Error !"
+
+  # Delete Routine
+  /api/v4/admin/deleteRoutineData:
+    post:
+      tags:
+        - "Admin"
+      summary: "Posts Routine Data"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: routine
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "200":
+          description: "Routine deleted successfully!"
+        "500":
+          description: "500 Internal Server Error !"
+
+  # *********** ->  admin   <- **************
+  # Admin Login
+  /api/v4/admin/Login:
+  post:
+    tags:
+      - "Admin"
+    summary: "Admin Login"
+    description: ""
+    consumes:
+    - "application/json"
+    produces:
+    - "application/json"
+    parameters:
+      - name: data
+        in: path
+        required: true
+        schema:
+          type: object
+    responses:
+      "200":
+        description: "Login successfully!"
+      "412":
+        description: "Wrong email or password !!"
+
+  # Register new user
+  /api/v4/admin/Signup:
+    post:
+      tags:
+        - "Admin"
+      summary: "Register new Admin"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: data
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "201":
+          description: "Admin created successfully!"
+        "500":
+          description: "500 Internal Server Error !"
+        "412":
+          description: "User already exists"
+
+  # *********** ->  Student   <- **************
+  # Student Login
+  /api/v4/student/Login:
+    post:
+      tags:
+        - "Student"
+      summary: "Student Login"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: data
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "200":
+          description: "Login successfully!"
+        "412":
+          description: "Wrong email or password !!"
+
+  # Register new Student
+  /api/v4/student/Signup:
+    post:
+      tags:
+        - "Student"
+      summary: "Register new Student"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: data
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "201":
+          description: "Student created successfully!"
+        "500":
+          description: "500 Internal Server Error !"
+        "412":
+          description: "User already exists"
+
+  # *********** ->  Teachers   <- **************
+  # Teacher Login
+  /api/v4/teacher/Login:
+    post:
+      tags:
+        - "Teacher"
+      summary: "Teacher Login"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: data
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "200":
+          description: "Login successfully!"
+        "412":
+          description: "Wrong email or password !!"
+
+  # Register new Teacher
+  /api/v4/teacher/Signup:
+    post:
+      tags:
+        - "Teacher"
+      summary: "Register new teacher"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: data
+          in: path
+          required: true
+          schema:
+            type: object
+      responses:
+        "201":
+          description: "Teacher created successfully!"
+        "500":
+          description: "500 Internal Server Error !"
+        "412":
+          description: "User already exists"
+
+
+
+
