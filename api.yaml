@@ -1,49 +1,82 @@
 swagger: "2.0"
 info:
-  description: "This is a documentation for Routine Management System of Herald College Kathmandu"
+  description: "API Documentation of Routine Management System consisting several CRUD featues and Authentication"
   version: "1.0.0"
-  title: "Herald Routine Management System"
+  title: "Routine Management System API Docs"
   contact:
+    name: "Parbat Lama"
     email: "np03cs4s210069@heraldcollege.edu.np"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-  server:
-    -url: "http://localhost:8000/"
-    description: "This is the local sever"
 
-schemes:
-- "http"
-- "https"
+tags:
+- name: "Admin"
+  description: "Operations about Admin user"
+- name: "Student"
+  description: "Operations about Student user"
+- name: "Teacher"
+  description: "Operations about Teacher user"
+
 
 paths:
+  /api/v4/student/Login:
+    post:
+      tags:
+      - "Student"
+      summary: "Student Login"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "uid"
+        in: "query" 
+        description: "The uid for login"
+        required: true
+        type: "string"
 
-  # login routing
-  # /api/v4/student/Login:
-  #   post:
-  #     tags:
-  #     - "Student"
-  #     summary: "Student Login"
-  #     description: ""
-  #     consumes:
-  #     - "application/json"
-  #     produces:
-  #     - "application/json"
-  #     parameters:
-  #       - name: uid
-  #         in: path
-  #         required: true
-  #         schema:
-  #           type: object
-  #     responses:
-  #       "400":
-  #         description: "Unverified users"
-  #       "200":
-  #         description: "Login successful"
-  #       "500":
-  #         description: "500 Internal Server Error !"
-
-  # Logout
+      responses:
+        "400":
+          description: "Unverified users"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to login"
+                token:
+                  type: string
+                  example: "null"
+        "200":
+          description: "Login successful"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Login succesfully"
+                token:
+                  type: string
+                  example: "s23241sfsdf.ad34fdsfdsdf.34sfgsfsfsfsd"
+        "500":
+          description: "500 Internal Server Error !"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to login"
+                token:
+                  type: string
+                  example: "null"
   /api/v4/Logout:
     post:
       summary: "Logout"
@@ -55,9 +88,6 @@ paths:
       responses:
           "200":
             description: "Logout successful"
-
-  # CRUD Routine Operation
-  # Post Routine
   /api/v4/admin/postRoutineData:
     post:
       tags:
@@ -69,37 +99,18 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: routine
-          in: path
-          required: true
-          schema:
-            type: object
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Routine"
       responses:
         "200":
           description: "Routine posted successfully!"
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                module_name:
-                  type: string
-                lecturer_name:
-                  type: string
-                group:
-                  type: string
-                room_name:
-                  type: string
-                block_name:
-                  type: string
-                timing:
-                  type: string
-                createdOn:
-                  type: string
         "500":
           description: "500 Internal Server Error !"
-
-  # get routine data
   /api/v4/admin/getRoutineData:
     get:
       tags:
@@ -111,22 +122,18 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: routine
-          in: path
-          required: true
-          schema:
-            type: object
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Routine"
       responses:
         "200":
           description: "Got Routine Data Successfully"
-          schema:
-            type: array
-            items:
-              type: object
         "500":
           description: "500 Internal Server Error !"
-  
-  # Update Routine
   /api/v4/admin/updateRoutineData:
     post:
       tags:
@@ -138,37 +145,18 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: routine
-          in: path
-          required: true
-          schema:
-            type: object
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Routine"
       responses:
         "200":
           description: "Routine updated successfully!"
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                module_name:
-                  type: string
-                lecturer_name:
-                  type: string
-                group:
-                  type: string
-                room_name:
-                  type: string
-                block_name:
-                  type: string
-                timing:
-                  type: string
-                createdOn:
-                  type: string
         "500":
           description: "500 Internal Server Error !"
-
-  # Delete Routine
   /api/v4/admin/deleteRoutineData:
     post:
       tags:
@@ -180,42 +168,65 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: routine
-          in: path
-          required: true
-          schema:
-            type: object
+      - name: "routineID"
+        in: "query" 
+        description: "The routine id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         "200":
           description: "Routine deleted successfully!"
         "500":
           description: "500 Internal Server Error !"
-
-  # *********** ->  admin   <- **************
-  # Admin Login
   /api/v4/admin/Login:
-  post:
-    tags:
-      - "Admin"
-    summary: "Admin Login"
-    description: ""
-    consumes:
-    - "application/json"
-    produces:
-    - "application/json"
-    parameters:
-      - name: data
-        in: path
+    post:
+      tags:
+        - "Admin"
+      summary: "Admin Login"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "email"
+        in: "query"
+        description: "The email for login"
         required: true
-        schema:
-          type: object
-    responses:
-      "200":
-        description: "Login successfully!"
-      "412":
-        description: "Wrong email or password !!"
-
-  # Register new user
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Login successfully!"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Login succesfully"
+                token:
+                  type: string
+                  example: "s23241sfsdf.ad34fdsfdsdf.34sfgsfsfsfsd"
+        "412":
+          description: "Wrong email or password !!"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to login"
+                token:
+                  type: string
+                  example: "null"
   /api/v4/admin/Signup:
     post:
       tags:
@@ -227,70 +238,56 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: data
-          in: path
-          required: true
-          schema:
-            type: object
+      - name: "email"
+        in: "query"
+        description: "The email for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
       responses:
         "201":
           description: "Admin created successfully!"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Account created succesfully"
+                token:
+                  type: string
+                  example: "s23241sfsdf.ad34fdsfdsdf.34sfgsfsfsfsd"
         "500":
           description: "500 Internal Server Error !"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to signup"
+                token:
+                  type: string
+                  example: "null"
         "412":
           description: "User already exists"
-
-  # *********** ->  Student   <- **************
-  # Student Login
-  /api/v4/student/Login:
-    post:
-      tags:
-        - "Student"
-      summary: "Student Login"
-      description: ""
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-        - name: data
-          in: path
-          required: true
           schema:
-            type: object
-      responses:
-        "200":
-          description: "Login successfully!"
-        "412":
-          description: "Wrong email or password !!"
-
-  # Register new Student
-  /api/v4/student/Signup:
-    post:
-      tags:
-        - "Student"
-      summary: "Register new Student"
-      description: ""
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-        - name: data
-          in: path
-          required: true
-          schema:
-            type: object
-      responses:
-        "201":
-          description: "Student created successfully!"
-        "500":
-          description: "500 Internal Server Error !"
-        "412":
-          description: "User already exists"
-
-  # *********** ->  Teachers   <- **************
-  # Teacher Login
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to signup"
+                token:
+                  type: string
+                  example: "null"          
   /api/v4/teacher/Login:
     post:
       tags:
@@ -302,18 +299,43 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: data
-          in: path
-          required: true
-          schema:
-            type: object
+      - name: "email"
+        in: "query"
+        description: "The email for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
       responses:
         "200":
           description: "Login successfully!"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Login succesfully"
+                token:
+                  type: string
+                  example: "s23241sfsdf.ad34fdsfdsdf.34sfgsfsfsfsd"
         "412":
           description: "Wrong email or password !!"
-
-  # Register new Teacher
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to login"
+                token:
+                  type: string
+                  example: "null"
   /api/v4/teacher/Signup:
     post:
       tags:
@@ -325,19 +347,110 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: data
-          in: path
-          required: true
-          schema:
-            type: object
+      - name: "email"
+        in: "query"
+        description: "The email for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
       responses:
         "201":
-          description: "Teacher created successfully!"
+          description: "Account created successfully!"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Account created succesfully"
+                token:
+                  type: string
+                  example: "s23241sfsdf.ad34fdsfdsdf.34sfgsfsfsfsd"
         "500":
           description: "500 Internal Server Error !"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to signup"
+                token:
+                  type: string
+                  example: "null"
         "412":
           description: "User already exists"
+          schema:
+            type: array
+            items:
+              type: object
+              properties: 
+                message:
+                  type: string
+                  example: "Failed to signup"
+                token:
+                  type: string
+                  example: "null"
+definitions:
+  Student:
+    type: "object"
+    properties:
+      uid: 
+        type: "string"
+  Teacher:
+    type: "object"
+    properties:
+      email: 
+        type: "string"
+      password: 
+        type: "string"
+  Admin:
+    type: "object"
+    properties:
+      email: 
+        type: "string"
+      password: 
+        type: "string"
+  Routine:
+    type: "object"
+    properties:
+      routineID:
+        type: "integer"
+        format: "int64"
+      module_name:
+        type: "string"
+      lecturer_name:
+        type: "string"
+      group:
+        type: "string"
+      room_name:
+        type: "string"
+      block_name:
+        type: "string"
+        enum:
+        - "HCK"
+        - "Wolverhampton"
+      start_time:
+        type: "string"
+        format: "date-time"
+      end_time:
+        type: "string"
+        format: "date-time"
+      createdOn:
+        type: "string"
+      
 
-
-
-
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+# basePath: /ayush-shrestha1/Routine_Management_System/1.0.0
+schemes:
+ - https
+ - http
+# Added by API Auto Mocking Plugin
+basePath: /DevelopmentPlatform/Routine_Management_System/1.0.0
