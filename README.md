@@ -411,6 +411,7 @@ message = SERVER ERROR
 1. Concurrency -> PM2 (cpu core utilization technique + Load balancing)
 2. Aggregation Framework for data mapping
 3. Event scheduler
+4. Inmemory storage (Caching)
 
 
 
