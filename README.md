@@ -407,12 +407,14 @@ message = SERVER ERROR
 1. Isolated versioning and configs (Into Production & Development)
 2. Password Hashing (SHA256) (Secure Hash Algorithm)
 
+
 # Upcoming features
 1. Concurrency -> PM2 (cpu core utilization technique + Load balancing)
 2. Aggregation Framework for data mapping
 3. Event scheduler
 4. Inmemory storage (Caching)
-
+5. AWS CI/CD Pipeline + Lambda Function 
+6. Cloud Hosting + Devops
 
 
 
