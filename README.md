@@ -415,6 +415,7 @@ message = SERVER ERROR
 4. Inmemory storage (Caching)
 5. AWS CI/CD Pipeline + Lambda Function 
 6. Cloud Hosting + Devops
+7. APM Log tracing (Performance tracking including memory usage, processing time, error logs, etc)
 
 
 
