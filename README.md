@@ -416,7 +416,7 @@ message = SERVER ERROR
 5. AWS CI/CD Pipeline + Lambda Function 
 6. Cloud Hosting + Devops
 7. APM Log tracing (Performance tracking including memory usage, processing time, error logs, etc)
-
+8. Files zipping while uploading credentials such as excellsheet (Performance optimization)
 
 
 
